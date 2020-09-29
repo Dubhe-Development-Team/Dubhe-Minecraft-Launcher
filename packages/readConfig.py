@@ -1,5 +1,4 @@
-import configparser
-import json
+import configparser, json
 
 
 def readIni(configPath, get1, get2):
