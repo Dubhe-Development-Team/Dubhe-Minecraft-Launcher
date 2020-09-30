@@ -1,9 +1,9 @@
-from packages import readConfig as cfg
+from packages import readConfig
 
-a = cfg.readIni("config.ini", "Dubhe Launcher", "b")
+a = readConfig.readIni("config.ini", "Dubhe Launcher", "b")
 print(a)
-b = cfg.readIni("C:/Users/Administrator/Desktop/config.ini", "Dubhe Launcher", "b")
+b = readConfig.readIni("C:/Users/Administrator/Desktop/config.ini", "Dubhe Launcher", "b")
 print(b)
 
-c = cfg.readJson("config.json", "a")
+c = readConfig.readJson("config.json", "a")
 print(c)

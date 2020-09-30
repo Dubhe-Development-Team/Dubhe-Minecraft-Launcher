@@ -1,6 +1,3 @@
 {
-  "a": {
-    "a": "b",
-    "c": "a"
-  }
+  "downloadAPI": "bmcl"
 }
