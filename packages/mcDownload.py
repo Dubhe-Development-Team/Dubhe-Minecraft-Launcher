@@ -72,8 +72,8 @@ def dlMinecraft(Version, Category, Name):
             os.makedirs('.minecraft/versions/' + Name, exist_ok=True)
             with open(file_dir + "/" + Name + ".jar", "wb") as code:
                 code.write(file.content)
-            with open(file_dir + "/" + Name + ".json", "wb") as code:
-                code.write(json.dumps(file_json.content, indent=4))
+            with open(file_dir + "/" + Name + ".json", "w+") as code:
+                code.write(json.dumps(json.loads(file_json.content), indent=4))
         else:
             return print("目录已存在")
     elif Category == "server":
