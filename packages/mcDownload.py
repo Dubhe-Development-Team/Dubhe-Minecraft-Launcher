@@ -1,7 +1,7 @@
 import requests
 from packages import readConfig
 import os
-import json
+import platform
 
 # 读取使用的API
 api = readConfig.readJson("./config.json", "downloadAPI")
@@ -83,3 +83,26 @@ def dlMinecraft(Version, Category, Name):
             code.write(file.content)
     else:
         return print("文件不存在")
+
+
+def dlJava():
+    global api_load
+    if api == "mojang":
+        api_load = "https://bmclapi2.bangbang93.com/"
+    system = platform.architecture()
+    if system == ('32bit', 'ELF'):
+        java = requests.get(api_load + "java/jre_x86.rpm")
+        with open("jre_x86.rpm", "wb") as code:
+            code.write(java.content)
+    elif system == ('64bit', 'ELF'):
+        java = requests.get(api_load + "java/jre_x64.rpm")
+        with open("jre_x86.rpm", "wb") as code:
+            code.write(java.content)
+    elif system == ('32bit', 'WindowsPE'):
+        java = requests.get(api_load + "java/jre_x86.exe")
+        with open("jre_x86.exe", "wb") as code:
+            code.write(java.content)
+    elif system == ('64bit', 'WindowsPE'):
+        java = requests.get(api_load + "java/jre_x64.exe")
+        with open("jre_x64.exe", "wb") as code:
+            code.write(java.content)
