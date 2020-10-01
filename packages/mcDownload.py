@@ -1,7 +1,5 @@
-import requests
+import requests, os, platform, json
 from packages import readConfig
-import os
-import platform
 
 # 读取使用的API
 api = readConfig.readJson("./config.json", "downloadAPI")
@@ -75,7 +73,7 @@ def dlMinecraft(Version, Category, Name):
             with open(file_dir + "/" + Name + ".jar", "wb") as code:
                 code.write(file.content)
             with open(file_dir + "/" + Name + ".json", "wb") as code:
-                code.write(file_json.content)
+                code.write(json.dumps(file_json.content, indent=4))
         else:
             return print("目录已存在")
     elif Category == "server":
