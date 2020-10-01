@@ -1,5 +1,7 @@
 import requests
 from packages import readConfig
+import os
+import json
 
 # 读取使用的API
 api = readConfig.readJson("./config.json", "downloadAPI")
@@ -8,6 +10,8 @@ if api != "bmcl":
         api_load = "https://download.mcbbs.net/"
     elif api == "mojang":
         api_load = "http://launchermeta.mojang.com/"
+    else:
+        api_load = "https://bmclapi2.bangbang93.com/"
 else:
     api_load = "https://bmclapi2.bangbang93.com/"
 
@@ -24,10 +28,10 @@ def getList(What, *mcVersion):
     elif what == "forge":
         if api == "mojang":
             for mcVer in mcVersion:
-                version = requests.get("https://bmclapi2.bangbang93.com/forge/minecraft/" +str(mcVer))
+                version = requests.get("https://bmclapi2.bangbang93.com/forge/minecraft/" + str(mcVer))
         else:
             for mcVer in mcVersion:
-                version = requests.get(api_load + "forge/minecraft/" +str(mcVer))
+                version = requests.get(api_load + "forge/minecraft/" + str(mcVer))
 
     # Liteloadder列表
     elif what == "liteloader":
@@ -51,10 +55,31 @@ def getList(What, *mcVersion):
             version = requests.get(api_load + "java/list")
 
     else:
-        version = "Warning, are you crazying?"
+        version = "Warning, are you crazing?"
 
     if type(version) == str:
         # 返回值
         return version
     else:
         return version.text
+
+
+def dlMinecraft(Version, Category, Name):
+    file = requests.get(api_load + "version/" + Version + "/" + Category)
+    if Category == "client":
+        file_dir = ".minecraft/versions/" + Name
+        file_ru = os.path.exists(file_dir)
+        if not file_ru:
+            file_json = requests.get(api_load + "version/" + Version + "/json")
+            os.makedirs('.minecraft/versions/' + Name, exist_ok=True)
+            with open(file_dir + "/" + Name + ".jar", "wb") as code:
+                code.write(file.content)
+            with open(file_dir + "/" + Name + ".json", "wb") as code:
+                code.write(file_json.content)
+        else:
+            return print("目录已存在")
+    elif Category == "server":
+        with open(Name + ".jar", "wb") as code:
+            code.write(file.content)
+    else:
+        return print("文件不存在")
